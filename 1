@@ -9,7 +9,7 @@ public:
     int* specimene;
     string specimen;
 
-    // Constructor implicit
+    
     Flamingo() : greutate(20), specimen("Ionel") {
         this->specimene = new int[this->greutate];
         for (int i = 0; i < this->greutate; i++) {
@@ -17,7 +17,7 @@ public:
         }
     }
 
-    // Constructor cu parametri pentru greutate și specimen
+   
     Flamingo(int greutate, string specimen) : greutate(greutate), specimen(specimen) {
         this->specimene = new int[this->greutate];
         for (int i = 0; i < this->greutate; i++) {
@@ -25,7 +25,7 @@ public:
         }
     }
 
-    // Constructor cu toți parametrii
+
     Flamingo(int greutate, string clasa, string specimen, int* specimene) :
         greutate(greutate),clasa(clasa), specimen(specimen) {
         this->specimene = new int[this->greutate];
@@ -34,7 +34,7 @@ public:
         }
     }
 
-    // Destructor pentru a elibera memoria alocată dinamic
+    
     ~Flamingo() {
         delete[] specimene;
     }
@@ -63,7 +63,7 @@ public:
     const int anInfiintare = 2005;
     int* varste;
 
-    // Constructor implicit
+ 
     SanctuarFlamingo() : nume("Sanctuarul Flamingo") {
         this->varste = new int[10];
         for (int i = 0; i < 10; i++) {
@@ -71,7 +71,7 @@ public:
         }
     }
 
-    // Constructor cu parametri pentru nume și prețul biletului
+   
     SanctuarFlamingo(string nume) : nume(nume) {
         this->varste = new int[10];
         for (int i = 0; i < 10; i++) {
@@ -79,7 +79,7 @@ public:
         }
     }
 
-    // Destructor pentru a elibera memoria alocată dinamic
+  
     ~SanctuarFlamingo() {
         delete[] varste;
     }
@@ -107,7 +107,7 @@ public:
     const string specie = "Phoenicopteridae";
     int* varsta;
 
-    // Constructor implicit
+   
     FlamencoRoz() : nume("Flamenco Roz") {
         this->varsta = new int[8];
         for (int i = 0; i < 8; i++) {
@@ -115,7 +115,6 @@ public:
         }
     }
 
-    // Constructor cu parametri pentru nume și zonă
     FlamencoRoz(string nume, string zona) : nume(nume) {
         this->varsta = new int[8];
         for (int i = 0; i < 8; i++) {
@@ -123,7 +122,7 @@ public:
         }
     }
 
-    // Destructor pentru a elibera memoria alocată dinamic
+    
     ~FlamencoRoz() {
         delete[] varsta;
     }
@@ -145,7 +144,7 @@ public:
 string FlamencoRoz::zona = "America Centrală";
 
 int main() {
-    // Obiecte pentru clasele definite
+  
     Flamingo f1;
     Flamingo::setRegiune(2);
     int* specimene = new int[5];
@@ -171,7 +170,6 @@ int main() {
     }
     FlamencoRoz flamenco2("Flamenco Argintiu", "America de Nord");
 
-    // Afișare atributele obiectelor
     f1.afisare();
     f2.afisare();
    
@@ -180,7 +178,6 @@ int main() {
     flamenco1.afisare();
     flamenco2.afisare();
 
-    // Eliberarea memoriei alocate dinamic
     delete[] specimene;
     delete[] varsteSanctuar;
     delete[] varstaFlamenco;
