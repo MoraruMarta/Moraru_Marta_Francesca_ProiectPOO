@@ -33,7 +33,7 @@ public:
     }
 
     ~Flamingo() {
-        delete[] specimene;
+        delete[]this-> specimene;
     }
 
     void setGreutate(int greutate) {
@@ -51,6 +51,37 @@ public:
     static int getRegiune() {
         return regiune;
     }
+    Flamingo& operator=(const Flamingo& other) {
+        if (this != &other) {
+            greutate = other.greutate;
+            delete[] specimene;
+            specimene = new int[greutate];
+            for (int i = 0; i < greutate; i++) {
+                specimene[i] = other.specimene[i];
+            }
+            specimen = other.specimen;
+        }
+        return *this;
+    }
+
+    bool operator==(const Flamingo& other) const {
+        return greutate == other.greutate && specimen == other.specimen;
+    }
+
+    Flamingo operator*(int factor) const {
+        Flamingo result(*this);
+        for (int i = 0; i < greutate; i++) {
+            result.specimene[i] *= factor;
+        }
+        return result;
+    }
+
+    int& operator[](int index) {
+        if (index >= 0 && index < greutate) {
+            return specimene[index];
+        }
+        throw out_of_range("Index invalid");
+    }
 
     void afisare() {
         cout << "Greutate: " << this->greutate << "\nRegiune: " << this->regiune << "\nClasa: " << this->clasa
@@ -60,6 +91,8 @@ public:
         }
         cout << this->specimene[this->greutate - 1] << endl;
     }
+    friend void friendFunction(const Flamingo& f);
+
 };
 
 int Flamingo::regiune = 1;
@@ -87,7 +120,7 @@ public:
     }
 
     ~SanctuarFlamingo() {
-        delete[] varste;
+        delete[]this-> varste;
     }
 
     void setNume(string nume) {
@@ -105,6 +138,36 @@ public:
     static string getPretBilet() {
         return pretBilet;
     }
+    SanctuarFlamingo& operator=(const SanctuarFlamingo& other) {
+        if (this != &other) {
+            nume = other.nume;
+            delete[] varste;
+            varste = new int[10];
+            for (int i = 0; i < 10; i++) {
+                varste[i] = other.varste[i];
+            }
+        }
+        return *this;
+    }
+
+    bool operator==(const SanctuarFlamingo& other) const {
+        return nume == other.nume;
+    }
+
+    SanctuarFlamingo operator*(int factor) const {
+        SanctuarFlamingo result(*this);
+        for (int i = 0; i < 10; i++) {
+            result.varste[i] *= factor;
+        }
+        return result;
+    }
+
+    int& operator[](int index) {
+        if (index >= 0 && index < 10) {
+            return varste[index];
+        }
+        throw out_of_range("Index invalid");
+    }
 
     void afisare() {
         cout << "Nume Sanctuar: " << this->nume << "\nPret Bilet: " << this->pretBilet << "\nAn Infiintare: "
@@ -114,6 +177,8 @@ public:
         }
         cout << this->varste[9] << endl;
     }
+    friend void friendFunction(const SanctuarFlamingo& sanctuar);
+
 };
 
 string SanctuarFlamingo::pretBilet = "15 RON";
@@ -141,7 +206,7 @@ public:
     }
 
     ~FlamencoRoz() {
-        delete[] varsta;
+        delete[]this-> varsta;
     }
 
     void setNume(string nume) {
@@ -159,6 +224,37 @@ public:
     static string getZona() {
         return zona;
     }
+    FlamencoRoz& operator=(const FlamencoRoz& other) {
+        if (this != &other) {
+            nume = other.nume;
+            delete[] varsta;
+            varsta = new int[8];
+            for (int i = 0; i < 8; i++) {
+                varsta[i] = other.varsta[i];
+            }
+        }
+        return *this;
+    }
+
+    bool operator==(const FlamencoRoz& other) const {
+        return nume == other.nume;
+    }
+
+    FlamencoRoz operator*(int factor) const {
+        FlamencoRoz result(*this);
+        for (int i = 0; i < 8; i++) {
+            result.varsta[i] *= factor;
+        }
+        return result;
+    }
+
+    int& operator[](int index) {
+        if (index >= 0 && index < 8) {
+            return varsta[index];
+        }
+        throw out_of_range("Index invalid");
+    }
+
 
     void afisare() {
         cout << "Nume: " << this->nume << "\nZona de Origine: " << this->zona << "\nSpecie: " << this->specie
@@ -168,9 +264,24 @@ public:
         }
         cout << this->varsta[7] << endl;
     }
+    friend void friendFunction(const FlamencoRoz& flamenco);
+
 };
 
 string FlamencoRoz::zona = "America Centrală";
+
+void friendFunction(const Flamingo& f) {
+    cout << "Friend Function - Greutate: " << f.getGreutate() << ", Regiune: " << Flamingo::getRegiune() << endl;
+}
+
+void friendFunction(const SanctuarFlamingo& sanctuar) {
+    cout << "Friend Function - Nume Sanctuar: " << sanctuar.getNume() << ", Pret Bilet: " << SanctuarFlamingo::getPretBilet() << endl;
+}
+
+void friendFunction(const FlamencoRoz& flamenco) {
+    cout << "Friend Function - Nume: " << flamenco.getNume() << ", Zona: " << FlamencoRoz::getZona() << endl;
+}
+
 
 void prelucrareFlamingo(const Flamingo& f) {
     cout << "Prelucrare Flamingo - Greutate: " << f.getGreutate() << ", Regiune: " << Flamingo::getRegiune() << endl;
@@ -200,7 +311,41 @@ int main() {
 
     prelucrareFlamingo(f1);
     prelucrareSanctuar(sanctuar1);
+    friendFunction(flamenco1);
+    Flamingo f3;
+    f3 = f1; 
+    if (f1 == f2) {
+        cout << "f1 este egal cu f2\n";
+    }
+    else {
+        cout << "f1 nu este egal cu f2\n";
+    }
+
+    Flamingo f4 = f1 * 2;  
+    cout << "f4 = f1 * 2: ";
+    f4.afisare();
+
+    f1[2] = 999; 
+    cout << "f1 dupa modificarea elementului 2: ";
+    f1.afisare();
+
+    SanctuarFlamingo sanctuar2;
+    sanctuar2 = sanctuar1;
+    if (sanctuar1 == sanctuar2) {
+        cout << "Sanctuarurile sunt identice\n";
+    }
+
+    FlamencoRoz flamenco3;
+    flamenco3 = flamenco2;
+    FlamencoRoz flamenco4 = flamenco2 * 3;
+    cout << "flamenco4 = flamenco2 * 3: ";
+    flamenco4.afisare();
+
+    flamenco2[1] = 777;
+    cout << "flamenco2 dupa modificarea elementului 1: ";
+    flamenco2.afisare();
 
     return 0;
 }
+
   
