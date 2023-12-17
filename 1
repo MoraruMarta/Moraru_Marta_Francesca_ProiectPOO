@@ -1,186 +1,189 @@
 #include <iostream>
 using namespace std;
 
-class Flamingo {
+class Animale {
 public:
-    int greutate;
-    static int regiune;
-    const string clasa ;
-    int* specimene;
-    string specimen;
-
-    
-    Flamingo() : greutate(20), specimen("Ionel") {
-        this->specimene = new int[this->greutate];
-        for (int i = 0; i < this->greutate; i++) {
-            this->specimene[i] = 100 + i;
-        }
-    }
-
-   
-    Flamingo(int greutate, string specimen) : greutate(greutate), specimen(specimen) {
-        this->specimene = new int[this->greutate];
-        for (int i = 0; i < this->greutate; i++) {
-            this->specimene[i] = 200 + i;
-        }
-    }
-
-
-    Flamingo(int greutate, string clasa, string specimen, int* specimene) :
-        greutate(greutate),clasa(clasa), specimen(specimen) {
-        this->specimene = new int[this->greutate];
-        for (int i = 0; i < this->greutate; i++) {
-            this->specimene[i] = specimene[i];
-        }
-    }
-
-    
-    ~Flamingo() {
-        delete[] specimene;
-    }
-
-    void afisare() {
-        cout << "Greutate: " << this->greutate << "\nRegiune: " << this->regiune << "\nClasa: " << this->clasa
-            << "\nSpecimen: " << this->specimen << "\nSpecimene: ";
-        for (int i = 0; i < this->greutate - 1; i++) {
-            cout << this->specimene[i] << ", ";
-        }
-        cout << this->specimene[this->greutate - 1] << endl;
-    }
-
-    static void setRegiune(int valoare) {
-        regiune = valoare;
-    }
-};
-
-
-int Flamingo::regiune = 1;
-
-class SanctuarFlamingo {
-public:
-    string nume;
-    static string pretBilet;
-    const int anInfiintare = 2005;
-    int* varste;
-
- 
-    SanctuarFlamingo() : nume("Sanctuarul Flamingo") {
-        this->varste = new int[10];
-        for (int i = 0; i < 10; i++) {
-            this->varste[i] = 5 + i;
-        }
-    }
-
-   
-    SanctuarFlamingo(string nume) : nume(nume) {
-        this->varste = new int[10];
-        for (int i = 0; i < 10; i++) {
-            this->varste[i] = 10 + i;
-        }
-    }
-
-  
-    ~SanctuarFlamingo() {
-        delete[] varste;
-    }
-
-    void afisare() {
-        cout << "Nume Sanctuar: " << this->nume << "\nPret Bilet: " << this->pretBilet << "\nAn Infiintare: "
-            << this->anInfiintare << "\nVarste Păsări: ";
-        for (int i = 0; i < 9; i++) {
-            cout << this->varste[i] << ", ";
-        }
-        cout << this->varste[9] << endl;
-    }
-
-    static void setPretBilet(string pret) {
-        pretBilet = pret;
-    }
-};
-
-string SanctuarFlamingo::pretBilet = "15 RON";
-
-class FlamencoRoz {
-public:
-    string nume;
-    static string zona;
-    const string specie = "Phoenicopteridae";
+    string specie;
+    int numar;
+    static int tarc;
+    const int id_contabilitate;
     int* varsta;
 
-   
-    FlamencoRoz() : nume("Flamenco Roz") {
-        this->varsta = new int[8];
-        for (int i = 0; i < 8; i++) {
-            this->varsta[i] = 2 + i;
+    Animale() : id_contabilitate(4277) {
+        this->specie = "Gaina";
+        this->numar = 3;
+        this->varsta = new int[this->numar];
+        for (int i = 0; i < this->numar; i++) {
+            this->varsta[i] = 1 + i;
         }
     }
 
-    FlamencoRoz(string nume, string zona) : nume(nume) {
-        this->varsta = new int[8];
-        for (int i = 0; i < 8; i++) {
-            this->varsta[i] = 5 + i;
+    Animale(string specie, int numar, const int id_contabilitate, int* varsta) : id_contabilitate(4279) {
+        this->specie = specie;
+        this->numar = numar;
+        this->varsta = new int[this->numar];
+        for (int i = 0; i < this->numar; i++) {
+            this->varsta[i] = varsta[i];
         }
     }
 
-    
-    ~FlamencoRoz() {
-        delete[] varsta;
-    }
-
-    void afisare() {
-        cout << "Nume: " << this->nume << "\nZona de Origine: " << this->zona << "\nSpecie: " << this->specie
-            << "\nVarsta: ";
-        for (int i = 0; i < 7; i++) {
-            cout << this->varsta[i] << ", ";
+    ~Animale() {
+        if (this->varsta != NULL) {
+            delete[] this->varsta;
+            this->varsta = NULL;
         }
-        cout << this->varsta[7] << endl;
     }
 
-    static void setZona(string newZona) {
-        zona = newZona;
+    void Afisare_animale() {
+        cout << "Specie: " << this->specie << "\nNumar: " << this->numar << "\nTarc: " << this->tarc << "\nId contabilitate: " << this->id_contabilitate << "\nVarsta: ";
+        for (int i = 0; i < this->numar - 1; i++) {
+            cout << this->varsta[i] << " , ";
+        }
+        cout << this->varsta[this->numar - 1] << endl;
+    }
+
+    static float calculeazaMediaVarstelor(const Animale& animale) {
+        int sumaVarstelor = 0;
+        for (int i = 0; i < animale.numar; i++) {
+            sumaVarstelor += animale.varsta[i];
+        }
+        return static_cast<float>(sumaVarstelor) / animale.numar;
     }
 };
 
-string FlamencoRoz::zona = "America Centrală";
+int Animale::tarc = 3;
 
-int main() {
+class Utilaje {
+public:
+    string nume;
+    int nr_kilometri;
+    static string marca;
+    const int capacitate_motor;
+    int* pieseSchimb;
+
+    Utilaje() : capacitate_motor(44) {
+        this->nume = "Tractor";
+        this->nr_kilometri = 4;
+        this->pieseSchimb = new int[this->nr_kilometri];
+        for (int i = 0; i < this->nr_kilometri; i++) {
+            this->pieseSchimb[i] = 1 + i;
+        }
+    }
+
+    Utilaje(string nume, int nr_kilometri, const int capacitate_motor, int* pieseSchimb) : capacitate_motor(98) {
+        this->nume = nume;
+        this->nr_kilometri = nr_kilometri;
+        this->pieseSchimb = new int[this->nr_kilometri];
+        for (int i = 0; i < this->nr_kilometri; i++) {
+            this->pieseSchimb[i] = pieseSchimb[i];
+        }
+    }
+
+    ~Utilaje() {
+        if (this->pieseSchimb != NULL) {
+            delete[] this->pieseSchimb;
+            this->pieseSchimb = NULL;
+        }
+    }
+
+    void Afisare_utilaje() {
+        cout << "Nume: " << this->nume << "\nNumar kilometri: " << this->nr_kilometri << "\nMarca: " << this->marca << "\nCapacitate motor: " << this->capacitate_motor << "\nKilometri parcursi pe luna: ";
+        for (int i = 0; i < this->nr_kilometri -1 ; i++) {
+            cout << this->pieseSchimb[i] << ", ";
+        }
+
+        cout << this->pieseSchimb[this->nr_kilometri - 1] << endl;
+    }
+
+    static int Minimpiese(const Utilaje& utilaj) {
+        return utilaj.pieseSchimb[0];
+    }
+};
+
+string Utilaje::marca = "Utilitas";
+
+class Terenuri {
+public:
+    int numar_teren;
+    int pretEvaluat;
+    static int kilometri;
+    const string localitate;
+    int* pretInitial;
+
+    Terenuri() : localitate("Urlati") {
+        this->numar_teren = 1;
+        this->pretEvaluat = 2;
+        this->pretInitial = new int[this->pretEvaluat];
+        for (int i = 0; i < this->pretEvaluat; i++) {
+            this->pretInitial[i] = 1 + i;
+        }
+    }
+
+    Terenuri(int numar_teren, int pretEvaluat, const string localitate, int* pretInitial) : localitate("Satu Nou") {
+        this->numar_teren = numar_teren;
+        this->pretEvaluat = pretEvaluat;
+        this->pretInitial = new int[this->pretEvaluat];
+        for (int i = 0; i < this->pretEvaluat; i++) {
+            this->pretInitial[i] = pretInitial[i];
+        }
+    }
+
+    ~Terenuri() {
+        if (this->pretInitial != NULL) {
+            delete[] this->pretInitial;
+            this->pretInitial = NULL;
+        }
+    }
+
+    void afisare_terenuri() {
+        cout << "Numarul terenului: " << this->numar_teren << "\nPret evaluat: " << this->pretEvaluat << "\nKilometri: " << this->kilometri << "\nLocalitate: " << this->localitate << "\nPret initial: ";
+        for (int i = 0; i < this->pretEvaluat -2; i++) {
+            cout << this->pretInitial[i] << " , ";
+        }
+        cout << this->pretInitial[this->pretEvaluat - 1] << endl;
+    }
+
+    static void setKilometri(int Kilometrinoi) {
+        kilometri = Kilometrinoi;
+    }
+
+};
+
+int Terenuri::kilometri = 25;
+
+void main() {
+ 
+    Animale a1;
+    Animale a2("Porci", 2, 1234, new int[2] {5, 7});
+
   
-    Flamingo f1;
-    Flamingo::setRegiune(2);
-    int* specimene = new int[5];
-    for (int i = 0; i < 5; i++) {
-        specimene[i] = (i * 2) + 1;
-    }
-    Flamingo f2(24, "Ancuta");
-    
+    Utilaje u1;
+    Utilaje u2("Combinezon", 2, 6, new int[3] {18, 19, 20});
 
-    SanctuarFlamingo sanctuar1;
-    SanctuarFlamingo::setPretBilet("25 RON");
-    int* varsteSanctuar = new int[10];
-    for (int i = 0; i < 10; i++) {
-        varsteSanctuar[i] = 8 + i;
-    }
-    
-
-    FlamencoRoz flamenco1;
-    FlamencoRoz::setZona("America de Sud");
-    int* varstaFlamenco = new int[8];
-    for (int i = 0; i < 8; i++) {
-        varstaFlamenco[i] = 3 + i;
-    }
-    FlamencoRoz flamenco2("Flamenco Argintiu", "America de Nord");
-
-    f1.afisare();
-    f2.afisare();
    
-    sanctuar1.afisare();
-   
-    flamenco1.afisare();
-    flamenco2.afisare();
+    Terenuri t1;
+    Terenuri t2(2, 2, "Brasov", new int[2] {15, 16});
 
-    delete[] specimene;
-    delete[] varsteSanctuar;
-    delete[] varstaFlamenco;
 
-    return 0;
+    cout << "Animale :\n";
+    a1.Afisare_animale();
+    cout << "\nAnimale :\n";
+    a2.Afisare_animale();
+
+    cout << "\nUtilaje :\n";
+    u1.Afisare_utilaje();
+    cout << "\nUtilaje :\n";
+    u2.Afisare_utilaje();
+
+    cout << "\nTerenuri :\n";
+    t1.afisare_terenuri();
+    cout << "\nTerenuri :\n";
+    t2.afisare_terenuri();
+    
+    cout << "\nMedia varstelor : " << Animale::calculeazaMediaVarstelor(a2);
+    cout << "\nMini piese : " << Utilaje::Minimpiese(u1);
+
+    
 }
+
+
