@@ -2,13 +2,22 @@
 using namespace std;
 
 class Animale {
-public:
+private:
     string specie;
     int numar;
     static int tarc;
     const int id_contabilitate;
     int* varsta;
+public:
+ string getSpecie() {
+        return this->specie;
+    }
 
+    void setSpecie(string specie) {
+        if (specie.length() > 3) {
+            this->specie = specie;
+        }
+    }
     Animale() : id_contabilitate(4277) {
         this->specie = "Gaina";
         this->numar = 3;
@@ -24,6 +33,14 @@ public:
         this->varsta = new int[this->numar];
         for (int i = 0; i < this->numar; i++) {
             this->varsta[i] = varsta[i];
+        }
+    }
+     Animale(const Animale &animale) : id_contabilitate(animale.id_contabilitate) {
+        this->specie = animale.specie;
+        this->numar = animale.numar;
+        this->varsta = new int[this->numar];
+        for (int i = 0; i < this->numar; i++) {
+            this->varsta[i] = animale.varsta[i];
         }
     }
 
@@ -49,18 +66,28 @@ public:
         }
         return static_cast<float>(sumaVarstelor) / animale.numar;
     }
+    friend void prelucrareAnimale(const Animale& animale);
 };
 
 int Animale::tarc = 3;
 
 class Utilaje {
-public:
+private:
     string nume;
     int nr_kilometri;
     static string marca;
     const int capacitate_motor;
     int* pieseSchimb;
+public:
+ string getNume() {
+        return this->nume;
+    }
 
+    void setNume(string nume) {
+        if (nume.length() > 1) {
+            this->nume = nume;
+        }
+    }
     Utilaje() : capacitate_motor(44) {
         this->nume = "Tractor";
         this->nr_kilometri = 4;
@@ -78,6 +105,15 @@ public:
             this->pieseSchimb[i] = pieseSchimb[i];
         }
     }
+     Utilaje(const Utilaje &utilaje) : capacitate_motor(utilaje.capacitate_motor) {
+        this->nume = utilaje.nume;
+        this->nr_kilometri = utilaje.nr_kilometri;
+        this->pieseSchimb = new int[this->nr_kilometri];
+        for (int i = 0; i < this->nr_kilometri; i++) {
+            this->pieseSchimb[i] = utilaje.pieseSchimb[i];
+        }
+    }
+
 
     ~Utilaje() {
         if (this->pieseSchimb != NULL) {
@@ -98,18 +134,29 @@ public:
     static int Minimpiese(const Utilaje& utilaj) {
         return utilaj.pieseSchimb[0];
     }
+       friend void prelucrareUtilaje(const Utilaje& utilaje);
 };
 
 string Utilaje::marca = "Utilitas";
 
 class Terenuri {
-public:
+private:
+string teren;
     int numar_teren;
     int pretEvaluat;
     static int kilometri;
     const string localitate;
     int* pretInitial;
+public:
+ string getTerenuri() {
+        return this->teren;
+    }
 
+    void setTerem() {
+        if (teren.length() > 3) {
+            this->teren= teren;
+        }
+    }
     Terenuri() : localitate("Urlati") {
         this->numar_teren = 1;
         this->pretEvaluat = 2;
@@ -125,6 +172,14 @@ public:
         this->pretInitial = new int[this->pretEvaluat];
         for (int i = 0; i < this->pretEvaluat; i++) {
             this->pretInitial[i] = pretInitial[i];
+        }
+    }
+ Terenuri(const Terenuri &terenuri) : localitate(terenuri.localitate) {
+        this->numar_teren = terenuri.numar_teren;
+        this->pretEvaluat = terenuri.pretEvaluat;
+        this->pretInitial = new int[this->pretEvaluat];
+        for (int i = 0; i < this->pretEvaluat; i++) {
+            this->pretInitial[i] = terenuri.pretInitial[i];
         }
     }
 
@@ -146,22 +201,42 @@ public:
     static void setKilometri(int Kilometrinoi) {
         kilometri = Kilometrinoi;
     }
+      friend void prelucrareTerenuri(const Terenuri& terenuri);
+
 
 };
+void prelucrareAnimale(const Animale& animale) {
+   
+    cout << "Animale: " << animale.specie << ", " << animale.numar << endl;
+}
+
+
+void prelucrareUtilaje(const Utilaje& utilaje) {
+ 
+    cout << " Utilaje: " << utilaje.nume << ", " << utilaje.nr_kilometri << endl;
+}
+void prelucrareTerenuri(const Terenuri& terenuri) {
+    cout << "Terenuri" << terenuri.numar_teren << " , " << terenuri.pretEvaluat << endl;
+}
 
 int Terenuri::kilometri = 25;
 
 void main() {
  
     Animale a1;
+     prelucrareAnimale(a1);
     Animale a2("Porci", 2, 1234, new int[2] {5, 7});
 
   
     Utilaje u1;
+prelucrareUtilaje(u1);
+
     Utilaje u2("Combinezon", 2, 6, new int[3] {18, 19, 20});
 
    
     Terenuri t1;
+        prelucrareTerenuri(t1);
+
     Terenuri t2(2, 2, "Brasov", new int[2] {15, 16});
 
 
