@@ -67,7 +67,102 @@ public:
         return static_cast<float>(sumaVarstelor) / animale.numar;
     }
     friend void prelucrareAnimale(const Animale& animale);
+ Animale& operator=(const Animale& animale) {
+        if (this != &animale) {
+            this->specie = animale.specie;
+            this->numar = animale.numar;
+            if (this->varsta != nullptr) {
+                delete[] this->varsta;
+            }
+            this->varsta = new int[this->numar];
+            for (int i = 0; i < this->numar; i++) {
+                this->varsta[i] = animale.varsta[i];
+            }
+        }
+        return *this;
+    }
+
+    Animale operator+(const Animale& animale) const {
+        Animale rezultat = *this;
+        for (int i = 0; i < this->numar; i++) {
+            rezultat.varsta[i] += animale.varsta[i];
+        }
+        return rezultat;
+    }
+
+    Animale operator-(const Animale& animale) const {
+        Animale rezultat = *this;
+        for (int i = 0; i < this->numar; i++) {
+            rezultat.varsta[i] -= animale.varsta[i];
+        }
+        return rezultat;
+    }
+
+    Animale operator*(int scalar) const {
+        Animale rezultat = *this;
+        for (int i = 0; i < this->numar; i++) {
+            rezultat.varsta[i] *= scalar;
+        }
+        return rezultat;
+    }
+
+    Animale operator/(int divizor) const {
+        if (divizor != 0) {
+            Animale rezultat = *this;
+            for (int i = 0; i < this->numar; i++) {
+                rezultat.varsta[i] /= divizor;
+            }
+            return rezultat;
+        }
+        else {
+            cerr << "Eroare" << endl;
+            exit(EXIT_FAILURE);
+        }
+    }
+
+    bool operator==(const Animale& animale) const {
+        return this->numar == animale.numar;
+    }
+
+    bool operator!=(const Animale& animale) const {
+        return this->numar != animale.numar;
+    }
+
+    Animale& operator++() {
+        for (int i = 0; i < this->numar; i++) {
+            this->varsta[i]++;
+        }
+        return *this;
+    }
+
+    Animale operator++(int) {
+        Animale temp = *this;
+        ++(*this);
+        return temp;
+    }
+
+    Animale& operator+=(const Animale& animale) {
+        for (int i = 0; i < this->numar; i++) {
+            this->varsta[i] += animale.varsta[i];
+        }
+        return *this;
+    }
+
+    friend ostream& operator<<(ostream& consola, const Animale& animale) {
+        cout << "Specie: " << animale.specie << "\nNumar: " << animale.numar << "\nVarsta: ";
+        for (int i = 0; i < animale.numar - 1; i++) {
+            cout << animale.varsta[i] << " , ";
+        }
+        cout << animale.varsta[animale.numar - 1] << endl;
+        return consola;
+    }
+
+    friend void afisareFriend(const Animale& animale);
 };
+
+void afisareFriend(const Animale& animale) {
+    cout << "Functie prietena pentru Animale: " << animale.specie << ", " << animale.numar << endl;
+}
 
 int Animale::tarc = 3;
 
@@ -135,6 +230,98 @@ public:
         return utilaj.pieseSchimb[0];
     }
        friend void prelucrareUtilaje(const Utilaje& utilaje);
+   Utilaje& operator=(const Utilaje& utilaje) {
+           if (this != &utilaje) {
+               this->nume = utilaje.nume;
+               this->nr_kilometri = utilaje.nr_kilometri;
+               if (this->pieseSchimb != nullptr) {
+                   delete[] this->pieseSchimb;
+               }
+               this->pieseSchimb = new int[this->nr_kilometri];
+               for (int i = 0; i < this->nr_kilometri; i++) {
+                   this->pieseSchimb[i] = utilaje.pieseSchimb[i];
+               }
+           }
+           return *this;
+       }
+
+       Utilaje operator+(const Utilaje& utilaje) const {
+           Utilaje rezultat = *this;
+           for (int i = 0; i < this->nr_kilometri; i++) {
+               rezultat.pieseSchimb[i] += utilaje.pieseSchimb[i];
+           }
+           return rezultat;
+       }
+
+       Utilaje operator-(const Utilaje& utilaje) const {
+           Utilaje rezultat = *this;
+           for (int i = 0; i < this->nr_kilometri; i++) {
+               rezultat.pieseSchimb[i] -= utilaje.pieseSchimb[i];
+           }
+           return rezultat;
+       }
+
+       Utilaje operator*(int scalar) const {
+           Utilaje rezultat = *this;
+           for (int i = 0; i < this->nr_kilometri; i++) {
+               rezultat.pieseSchimb[i] *= scalar;
+           }
+           return rezultat;
+       }
+
+       Utilaje operator/(int divizor) const {
+           if (divizor != 0) {
+               Utilaje rezultat = *this;
+               for (int i = 0; i < this->nr_kilometri; i++) {
+                   rezultat.pieseSchimb[i] /= divizor;
+               }
+               return rezultat;
+           }
+           else {
+               cerr << "Eroare" << endl;
+               exit(EXIT_FAILURE);
+           }
+       }
+
+       bool operator==(const Utilaje& utilaje) const {
+           return this->nr_kilometri == utilaje.nr_kilometri;
+       }
+
+       bool operator!=(const Utilaje& utilaje) const {
+           return this->nr_kilometri != utilaje.nr_kilometri;
+       }
+
+       Utilaje& operator++() {
+           for (int i = 0; i < this->nr_kilometri; i++) {
+               this->pieseSchimb[i]++;
+           }
+           return *this;
+       }
+
+       Utilaje operator++(int) {
+           Utilaje temp = *this;
+           ++(*this);
+           return temp;
+       }
+
+       Utilaje& operator+=(const Utilaje& utilaje) {
+           for (int i = 0; i < this->nr_kilometri; i++) {
+               this->pieseSchimb[i] += utilaje.pieseSchimb[i];
+           }
+           return *this;
+       }
+
+       friend ostream& operator<<(ostream& consola, const Utilaje& utilaje) {
+           cout << "Nume: " << utilaje.nume << "\nNumar kilometri: " << utilaje.nr_kilometri << "\nMarca: " << utilaje.marca << "\nCapacitate motor: " << utilaje.capacitate_motor << "\nKilometri parcursi pe luna: ";
+           for (int i = 0; i < utilaje.nr_kilometri - 1; i++) {
+               cout << utilaje.pieseSchimb[i] << ", ";
+           }
+
+           cout << utilaje.pieseSchimb[utilaje.nr_kilometri - 1] << endl;
+           return consola;
+       }
+
+       friend void afisareFriend(const Utilaje& utilaje);
 };
 
 string Utilaje::marca = "Utilitas";
@@ -218,46 +405,248 @@ void prelucrareUtilaje(const Utilaje& utilaje) {
 void prelucrareTerenuri(const Terenuri& terenuri) {
     cout << "Terenuri" << terenuri.numar_teren << " , " << terenuri.pretEvaluat << endl;
 }
+  Terenuri& operator=(const Terenuri& terenuri) {
+          if (this != &terenuri) {
+              this->numar_teren = terenuri.numar_teren;
+              this->pretEvaluat = terenuri.pretEvaluat;
+              if (this->pretInitial != nullptr) {
+                  delete[] this->pretInitial;
+              }
+              this->pretInitial = new int[this->pretEvaluat];
+              for (int i = 0; i < this->pretEvaluat; i++) {
+                  this->pretInitial[i] = terenuri.pretInitial[i];
+              }
+          }
+          return *this;
+      }
+
+      Terenuri operator+(const Terenuri& terenuri) const {
+          Terenuri rezultat = *this;
+          for (int i = 0; i < this->pretEvaluat; i++) {
+              rezultat.pretInitial[i] += terenuri.pretInitial[i];
+          }
+          return rezultat;
+      }
+
+      Terenuri operator-(const Terenuri& terenuri) const {
+          Terenuri rezultat = *this;
+          for (int i = 0; i < this->pretEvaluat; i++) {
+              rezultat.pretInitial[i] -= terenuri.pretInitial[i];
+          }
+          return rezultat;
+      }
+
+      Terenuri operator*(int scalar) const {
+          Terenuri result = *this;
+          for (int i = 0; i < this->pretEvaluat; i++) {
+              result.pretInitial[i] *= scalar;
+          }
+          return result;
+      }
+
+      Terenuri operator/(int divizor) const {
+          if (divizor != 0) {
+              Terenuri rezultat = *this;
+              for (int i = 0; i < this->pretEvaluat; i++) {
+                  rezultat.pretInitial[i] /= divizor;
+              }
+              return rezultat;
+          }
+          else {
+              cerr << "Eroare" << endl;
+              exit(EXIT_FAILURE);
+          }
+      }
+
+      bool operator==(const Terenuri& terenuri) const {
+          return this->pretEvaluat == terenuri.pretEvaluat;
+      }
+
+      bool operator!=(const Terenuri& terenuri) const {
+          return this->pretEvaluat != terenuri.pretEvaluat;
+      }
+
+      Terenuri& operator++() {
+          for (int i = 0; i < this->pretEvaluat; i++) {
+              this->pretInitial[i]++;
+          }
+          return *this;
+      }
+
+      Terenuri operator++(int) {
+          Terenuri temp = *this;
+          ++(*this);
+          return temp;
+      }
+
+      Terenuri& operator+=(const Terenuri& terenuri) {
+          for (int i = 0; i < this->pretEvaluat; i++) {
+              this->pretInitial[i] += terenuri.pretInitial[i];
+          }
+          return *this;
+      }
+
+      friend ostream& operator<<(ostream& consola, const Terenuri& terenuri) {
+          cout << "Numarul terenului: " << terenuri.numar_teren << "\nPret evaluat: " << terenuri.pretEvaluat << "\nKilometri: " << terenuri.kilometri << "\nLocalitate: " << terenuri.localitate << "\nPret initial: ";
+          for (int i = 0; i < terenuri.pretEvaluat - 2; i++) {
+              cout << terenuri.pretInitial[i] << " , ";
+          }
+          cout << terenuri.pretInitial[terenuri.pretEvaluat - 1] << endl;
+          return consola;
+      }
+
+      friend void afisareFriend(const Terenuri& terenuri);
+};
+
+void afisareFriend(const Terenuri& terenuri) {
+    cout << "Functie prietena pentru Terenuri: " << terenuri.numar_teren << ", " << terenuri.pretEvaluat << endl;
+}
+
+
+void prelucrareAnimale(const Animale& animale) {
+   
+    cout << "Animale: " << animale.specie << ", " << animale.numar << endl;
+}
+
+
+void prelucrareUtilaje(const Utilaje& utilaje) {
+ 
+    cout << " Utilaje: " << utilaje.nume << ", " << utilaje.nr_kilometri << endl;
+}
+void prelucrareTerenuri(const Terenuri& terenuri) {
+    cout << "Terenuri" << terenuri.numar_teren << " , " << terenuri.pretEvaluat << endl;
+}
 
 int Terenuri::kilometri = 25;
 
 void main() {
  
-    Animale a1;
-     prelucrareAnimale(a1);
-    Animale a2("Porci", 2, 1234, new int[2] {5, 7});
+       Animale a1;
+   
 
-  
+    Animale a2("Porci", 2, 1234, new int[2] {5, 7});
+ 
+
+    Animale a3("Cai", 2, 5678, new int[2] {8, 10});
+    cout << "Animale 3:\n" << a3;
+
+    Animale a4;
+    a4 = a2 + a3;
+    cout << a4;
+
+    Animale a5;
+    a5 = a3 - a2;
+    cout << a5;
+
+    Animale a6;
+    a6 = a3 * 2;
+    cout <<  a6;
+
+    Animale a7;
+    a7 = a3 / 2;
+    cout << a7;
+
+    if (a2 == a3) {
+        cout << "a2 egal cu  a3\n";
+    }
+    else {
+        cout << "a2 nu e egal cu a3\n";
+    }
+
+    if (a1 != a2) {
+        cout << "a1 nu e egal cu a2\n";
+    }
+    else {
+        cout << "a1 nu e egal cu a2\n";
+    }
+
+    ++a3;
+    cout  << a3;
+
+    a4++;
+    cout << a4;
+
     Utilaje u1;
-prelucrareUtilaje(u1);
+    prelucrareUtilaje(u1);
 
     Utilaje u2("Combinezon", 2, 6, new int[3] {18, 19, 20});
+    prelucrareUtilaje(u2);
 
-   
+    Utilaje u3("Buldozer", 3, 8, new int[3] {21, 22, 23});
+    cout << "Utilaje 3:\n" << u3;
+
+    Utilaje u4;
+    u4 = u2 + u3;
+    cout << u4;
+
+    Utilaje u5;
+    u5 = u3 - u2;
+    cout <<  u5;
+
+    Utilaje u6;
+    u6 = u3 * 2;
+    cout <<  u6;
+
+    Utilaje u7;
+    u7 = u3 / 2;
+    cout << u7;
+
+    if (u2 == u3) {
+        cout << "u2 egal cu u3\n";
+    }
+    else {
+        cout << "u2 nu e egal cu u3\n";
+    }
+
+    if (u1 != u2) {
+        cout << "u1 nu e egal cu u2\n";
+    }
+    else {
+        cout << "u1 nu e egal cu u2\n";
+    }
+
     Terenuri t1;
-        prelucrareTerenuri(t1);
+    cout << "Terenuri 1:\n" << t1;
 
     Terenuri t2(2, 2, "Brasov", new int[2] {15, 16});
+    cout << "Terenuri 2:\n" << t2;
 
+    Terenuri t3(3, 3, "Timisoara", new int[3] {25, 26, 27});
+    cout << "Terenuri 3:\n" << t3;
 
-    cout << "Animale :\n";
-    a1.Afisare_animale();
-    cout << "\nAnimale :\n";
-    a2.Afisare_animale();
+    Terenuri t4;
+    t4 = t2 + t3;
+    cout <<  t4;
 
-    cout << "\nUtilaje :\n";
-    u1.Afisare_utilaje();
-    cout << "\nUtilaje :\n";
-    u2.Afisare_utilaje();
+    Terenuri t5;
+    t5 = t3 - t2;
+    cout << t5;
 
-    cout << "\nTerenuri :\n";
-    t1.afisare_terenuri();
-    cout << "\nTerenuri :\n";
-    t2.afisare_terenuri();
-    
-    cout << "\nMedia varstelor : " << Animale::calculeazaMediaVarstelor(a2);
-    cout << "\nMini piese : " << Utilaje::Minimpiese(u1);
+    if (t2 == t3) {
+        cout << "t2 egal cu t3\n";
+    }
+    else {
+        cout << "t2 nu e egal cu t3\n";
+    }
 
+    if (t1 != t2) {
+        cout << "t1 nu e egal cu t2\n";
+    }
+    else {
+        cout << "t1 egal cu t2\n";
+    }
+
+    Terenuri t6 = ++t2;
+    cout <<  t6;
+
+    Terenuri t7 = t3++;
+    cout  << t7;
+
+    Terenuri::setKilometri(30);
+
+    cout << t2;
+
+    prelucrareTerenuri(t2);
     
 }
 
