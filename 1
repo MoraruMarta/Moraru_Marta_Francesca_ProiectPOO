@@ -18,6 +18,11 @@ public:
             this->specie = specie;
         }
     }
+
+    int getNumar() {
+        return this->numar;
+    }
+
     Animale() : id_contabilitate(4277) {
         this->specie = "Gaina";
         this->numar = 3;
@@ -67,7 +72,8 @@ public:
         return static_cast<float>(sumaVarstelor) / animale.numar;
     }
     friend void prelucrareAnimale(const Animale& animale);
- Animale& operator=(const Animale& animale) {
+
+    Animale& operator=(const Animale& animale) {
         if (this != &animale) {
             this->specie = animale.specie;
             this->numar = animale.numar;
@@ -164,6 +170,7 @@ void afisareFriend(const Animale& animale) {
     cout << "Functie prietena pentru Animale: " << animale.specie << ", " << animale.numar << endl;
 }
 
+
 int Animale::tarc = 3;
 
 class Utilaje {
@@ -177,6 +184,9 @@ public:
  string getNume() {
         return this->nume;
     }
+ int getNr_kilometri() {
+     return this->nr_kilometri;
+ }
 
     void setNume(string nume) {
         if (nume.length() > 1) {
@@ -229,8 +239,9 @@ public:
     static int Minimpiese(const Utilaje& utilaj) {
         return utilaj.pieseSchimb[0];
     }
-       friend void prelucrareUtilaje(const Utilaje& utilaje);
-   Utilaje& operator=(const Utilaje& utilaje) {
+    friend void prelucrareUtilaje(const Utilaje& utilaje);
+
+       Utilaje& operator=(const Utilaje& utilaje) {
            if (this != &utilaje) {
                this->nume = utilaje.nume;
                this->nr_kilometri = utilaje.nr_kilometri;
@@ -324,6 +335,12 @@ public:
        friend void afisareFriend(const Utilaje& utilaje);
 };
 
+void afisareFriend(const Utilaje& utilaje) {
+    cout << "Functie prietena pentru Utilaje: " << utilaje.nume << ", " << utilaje.nr_kilometri << endl;
+}
+
+
+
 string Utilaje::marca = "Utilitas";
 
 class Terenuri {
@@ -390,22 +407,7 @@ public:
     }
       friend void prelucrareTerenuri(const Terenuri& terenuri);
 
-
-};
-void prelucrareAnimale(const Animale& animale) {
-   
-    cout << "Animale: " << animale.specie << ", " << animale.numar << endl;
-}
-
-
-void prelucrareUtilaje(const Utilaje& utilaje) {
- 
-    cout << " Utilaje: " << utilaje.nume << ", " << utilaje.nr_kilometri << endl;
-}
-void prelucrareTerenuri(const Terenuri& terenuri) {
-    cout << "Terenuri" << terenuri.numar_teren << " , " << terenuri.pretEvaluat << endl;
-}
-  Terenuri& operator=(const Terenuri& terenuri) {
+      Terenuri& operator=(const Terenuri& terenuri) {
           if (this != &terenuri) {
               this->numar_teren = terenuri.numar_teren;
               this->pretEvaluat = terenuri.pretEvaluat;
@@ -519,9 +521,62 @@ void prelucrareTerenuri(const Terenuri& terenuri) {
 
 int Terenuri::kilometri = 25;
 
+class Ferma {
+private:
+    static const int Max_animale = 1;
+    static const int Max_kilometri = 1;
+
+    Animale* animale[Max_animale];
+    Utilaje* utilaje[Max_kilometri];
+
+    int numarAnimale;
+    int numarUtilaje;
+
+public:
+    Ferma() : numarAnimale(0), numarUtilaje(0) {}
+
+    void adaugaAnimal(const Animale& animal) {
+        if (numarAnimale < Max_animale) {
+            animale[numarAnimale++] = new Animale(animal);
+        } else {
+            std::cerr << "Numarul maxim " << std::endl;
+        }
+    }
+
+    void adaugaUtilaj(const Utilaje& utilaj) {
+        if (numarUtilaje < Max_kilometri) {
+            utilaje[numarUtilaje++] = new Utilaje(utilaj);
+        } else {
+            std::cerr << "Numarul maxim " << std::endl;
+        }
+    }
+
+    void afisareFerma() {
+        std::cout << "Animale ferma:\n";
+        for (int i = 0; i < numarAnimale; ++i) {
+            std::cout << "Specie: " << animale[i]->getSpecie() << ", Numar: " << animale[i]->getNumar() << std::endl;
+        }
+
+        std::cout << "\nKilometri parcursi:\n";
+        for (int i = 0; i < numarUtilaje; ++i) {
+            std::cout << "Tip: " << utilaje[i]->getNume() << ", Numar: " << utilaje[i]->getNr_kilometri() << std::endl;
+        }
+    }
+
+    ~Ferma() {
+        for (int i = 0; i < numarAnimale; ++i) {
+            delete animale[i];
+        }
+
+        for (int i = 0; i < numarUtilaje; ++i) {
+            delete utilaje[i];
+        }
+    }
+};
+
 void main() {
- 
-       Animale a1;
+    
+    Animale a1;
    
 
     Animale a2("Porci", 2, 1234, new int[2] {5, 7});
@@ -647,7 +702,16 @@ void main() {
     cout << t2;
 
     prelucrareTerenuri(t2);
-    
+
+
+    Ferma ferma;
+    ferma.adaugaAnimal(a1);
+    ferma.adaugaAnimal(a2);
+    ferma.adaugaUtilaj(u1);
+    ferma.adaugaUtilaj(u2);
+
+    ferma.afisareFerma();
+
 }
 
 
