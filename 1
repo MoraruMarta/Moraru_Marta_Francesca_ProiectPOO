@@ -695,6 +695,57 @@ public:
     }
 };
 
+class Angajati : public Animale {
+private:
+    string numeAngajat;
+    int salariu;
+
+public:
+    Angajati() : numeAngajat("Dorel Popa"), salariu(4000) {}
+
+    
+    string getNumeAngajat() const {
+        return numeAngajat;
+    }
+
+    void setNumeAngajat(const string& numeAngajat) {
+        this->numeAngajat = numeAngajat;
+    }
+
+    int getSalariu() const {
+        return salariu;
+    }
+
+    void setSalariu(int salariu) {
+        this->salariu = salariu;
+    }
+
+    void afisareAngajat() const {
+        cout << "\nNume Angajat: " << numeAngajat << "\nSalariu: " << salariu << endl;
+    }
+};
+
+class ProduseAnimale : public Utilaje {
+private:
+    string tipProdus;
+
+public:
+    ProduseAnimale() : tipProdus("Lapte") {}
+
+    string getTipProdus() const {
+        return tipProdus;
+    }
+
+    void setTipProdus(const string& tipProdus) {
+        this->tipProdus = tipProdus;
+    }
+
+ 
+    void afisareProdus() const {
+        cout << "\nTip Produs: " << tipProdus << endl;
+    }
+};
+
 void main() {
     
     Animale a1;
@@ -853,7 +904,25 @@ void main() {
 
     afisareFriend(a1);
     afisareFriend(u1);
+    Angajati angajat1;
+    ProduseAnimale produs1;
 
+    angajat1.setNumeAngajat("Alice");
+    angajat1.setSalariu(3000);
+
+    produs1.setNume("Lactifer");
+    produs1.setTipProdus("Branza");
+
+ 
+    cout << "Angajat 1:\n";
+    angajat1.afisareAngajat();
+
+    cout << "\nProdus 1:\n";
+    produs1.afisareProdus();
+
+ 
+    Animale* animale[] = { &a1, &angajat1 };
+    Utilaje* utilaje[] = { &u1, &produs1 };
 }
 
 
