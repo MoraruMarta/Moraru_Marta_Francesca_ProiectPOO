@@ -164,6 +164,70 @@ public:
     }
 
     friend void afisareFriend(const Animale& animale);
+
+      friend void afisareFriend(const Animale& animale);
+    void scrieInFisierText(const string& numeFisier) const {
+        ofstream fout(numeFisier);
+        if (!fout.is_open()) {
+            cerr << "Eroare la deschiderea fisierului text\n";
+            return;
+        }
+
+        fout << "Specie: " << specie << "\nNumar: " << numar << "\nVarsta: ";
+        for (int i = 0; i < numar - 1; i++) {
+            fout << varsta[i] << " , ";
+        }
+        fout << varsta[numar - 1] << endl;
+
+        fout.close();
+    }
+
+
+    void citesteDinFisierText(const string& numeFisier) {
+        ifstream fin(numeFisier);
+        if (!fin.is_open()) {
+            cerr << "Eroare la deschiderea fisierului text\n";
+            return;
+        }
+
+        fin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+        fin >> specie >> numar;
+        delete[] varsta;
+        varsta = new int[numar];
+        for (int i = 0; i < numar; i++) {
+            fin >> varsta[i];
+        }
+
+        fin.close();
+    }
+
+ 
+  
+   
+    void scrieInFisierBinar(const string& numeFisier) const {
+        ofstream fout(numeFisier, ios::binary | ios::trunc);
+        if (!fout.is_open()) {
+            cerr << "Eroare la deschiderea fisierului binar\n";
+            return;
+        }
+
+        fout.write(reinterpret_cast<const char*>(this), sizeof(*this));
+
+        fout.close();
+    }
+
+   
+    void citesteDinFisierBinar(const string& numeFisier) {
+        ifstream fin(numeFisier, ios::binary);
+        if (!fin.is_open()) {
+            cerr << "Eroare la deschiderea fisierului binar\n";
+            return;
+        }
+
+        fin.read(reinterpret_cast<char*>(this), sizeof(*this));
+
+        fin.close();
+    }
 };
 
 void afisareFriend(const Animale& animale) {
@@ -333,6 +397,63 @@ public:
        }
 
        friend void afisareFriend(const Utilaje& utilaje);
+         void scrieInFisierText(const string& numeFisier) const {
+        ofstream fout(numeFisier);
+        if (!fout.is_open()) {
+            cerr << "Eroare la deschiderea fisierului text\n";
+            return;
+        }
+
+        fout << "Nume: " << nume << "\nNumar kilometri: " << nr_kilometri << "\nPiese de schimb: ";
+        for (int i = 0; i < nr_kilometri - 1; i++) {
+            fout << pieseSchimb[i] << " , ";
+        }
+        fout << pieseSchimb[nr_kilometri - 1] << endl;
+
+        fout.close();
+    }
+
+    void citesteDinFisierText(const string& numeFisier) {
+        ifstream fin(numeFisier);
+        if (!fin.is_open()) {
+            cerr << "Eroare la deschiderea fisierului text\n";
+            return;
+        }
+
+        fin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+        fin >> nume >> nr_kilometri;
+        delete[] pieseSchimb;
+        pieseSchimb = new int[nr_kilometri];
+        for (int i = 0; i < nr_kilometri; i++) {
+            fin >> pieseSchimb[i];
+        }
+
+        fin.close();
+    }
+
+    void scrieInFisierBinar(const string& numeFisier) const {
+        ofstream fout(numeFisier, ios::binary | ios::trunc);
+        if (!fout.is_open()) {
+            cerr << "Eroare la deschiderea fisierului binar\n";
+            return;
+        }
+
+        fout.write(reinterpret_cast<const char*>(this), sizeof(*this));
+
+        fout.close();
+    }
+
+    void citesteDinFisierBinar(const string& numeFisier) {
+        ifstream fin(numeFisier, ios::binary);
+        if (!fin.is_open()) {
+            cerr << "Eroare la deschiderea fisierului binar\n";
+            return;
+        }
+
+        fin.read(reinterpret_cast<char*>(this), sizeof(*this));
+
+        fin.close();
+    }
 };
 
 void afisareFriend(const Utilaje& utilaje) {
@@ -711,6 +832,27 @@ void main() {
     ferma.adaugaUtilaj(u2);
 
     ferma.afisareFerma();
+
+    cout << "Animale :\n" << a1 << endl;
+    cout << "Utilaj :\n" << u1 << endl;
+    a1.scrieInFisierText("animal.txt");
+    u1.scrieInFisierText("utilaj.txt");
+
+
+  
+  
+
+    a2.citesteDinFisierText("animal.txt");
+    u2.citesteDinFisierText("utilaj.txt");
+
+   
+
+ 
+    cout << "Animale 2 dupa citire:\n" << a2 << endl;
+    cout << "Utilaj 2 dupa citire:\n" << u2 << endl;
+
+    afisareFriend(a1);
+    afisareFriend(u1);
 
 }
 
