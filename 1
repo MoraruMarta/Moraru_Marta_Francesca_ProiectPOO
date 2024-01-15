@@ -230,7 +230,11 @@ public:
         fin.close();
     }
 };
-
+class AbstractAnimale {
+public:
+    virtual void sunetAnimal() const = 0;  
+    virtual ~AbstractAnimale() = default;
+};
 void afisareFriend(const Animale& animale) {
     cout << "Functie prietena pentru Animale: " << animale.specie << ", " << animale.numar << endl;
 }
@@ -461,6 +465,11 @@ void afisareFriend(const Utilaje& utilaje) {
     cout << "Functie prietena pentru Utilaje: " << utilaje.nume << ", " << utilaje.nr_kilometri << endl;
 }
 
+class AbstractUtilaje {
+public:
+    virtual void functionareUtilaj() const = 0;  
+    virtual ~AbstractUtilaje() = default;
+};
 
 
 string Utilaje::marca = "Utilitas";
@@ -924,6 +933,11 @@ void main() {
  
     Animale* animale[] = { &a1, &angajat1 };
     Utilaje* utilaje[] = { &u1, &produs1 };
+
+     const int numarElemente = 10;
+    AbstractAnimale* vectorAnimale[numarElemente];
+    AbstractUtilaje* vectorUtilaje[numarElemente];
+   
 }
 
 
